@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block container %}
+<div class="product-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">Liste</span> de produits</h3>
+					</div>
+				</div>
+			</div>
+			
+        
+		<div class="row">
+		 {% for medicament in medicaments %}   
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="single-product.html">
+							<img src="{{ asset('uploads/images/' ~ medicament.image) }}"  alt="">
+					
+							</a>
+						</div>
+						<h3>{{medicament.libelle}}</h3>
+						<p class="product-price"><span>{{medicament.getDateDebut|date('d/m/Y')}}-{{medicament.getDateExp|date('d/m/Y')}}
+						</span> {{medicament.prix}} </p>
+						<a href="{{path ('ajouPanier',{'id':medicament.id})}}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add au Panier</a>
+					</div>
+				</div>
+					{% endfor %}
+			</div>
+		<nav aria-label="...">
+                                <ul class="pagination pagination-lg d-flex justify-content-center">
+                                  <li class=" active" aria-current="page">
+                                    <span class="page-link"> {{ knp_pagination_render(medicaments) }}</span>
+                                  </li>
+            
+                                </ul>
+                              </nav>
+                        
+
+	</div>
+				</div>
+	<!-- cart banner section -->
+	<section class="cart-banner pt-100 pb-100">
+    	<div class="container">
+        	<div class="row clearfix">
+            	<!--Image Column-->
+            	<div class="image-column col-lg-6">
+                	<div class="image">
+                    	<div class="price-box">
+                        	<div class="inner-price">
+                                <span class="price">
+                                    <strong>30%</strong> <br> off per kg
+                                </span>
+                            </div>
+                        </div>
+                    	<img src="{{asset('img/med2.jpg')}}" alt="">
+                    </div>
+                </div>
+                <!--Content Column-->
+                <div class="content-column col-lg-6">
+					<h3><span class="orange-text">Deal</span> of the month</h3>
+                    <h4>Hikan Strwaberry</h4>
+                    <div class="text">Quisquam minus maiores repudiandae nobis, minima saepe id, fugit ullam similique! Beatae, minima quisquam molestias facere ea. Perspiciatis unde omnis iste natus error sit voluptatem accusant</div>
+                    <!--Countdown Timer-->
+                    <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2020/2/01"><div class="counter-column"><div class="inner"><span class="count">00</span>Days</div></div> <div class="counter-column"><div class="inner"><span class="count">00</span>Hours</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Mins</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Secs</div></div></div></div>
+                	<a href="cart.html" class="cart-btn mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end cart banner section -->
+		
+	<div class="testimonail-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1 text-center">
+					<div class="testimonial-sliders">
+					{% for user in users %} 
+						<div class="single-testimonial-slider">
+					   
+						<div class="single-testimonial-slider">
+						
+							<div class="client-avater">
+				
+								   <img src="{{ asset('uploads/images/' ~ user.image) }}"  alt="">
+
+							</div>
+							<div class="client-meta">
+								<h3>{{user.getNomComplet}}<span>{{user.username}}</span></h3>
+								<p class="testimonial-body">
+									" today ism tomorow the world"
+								</p>
+								
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+								
+						</div>
+				
+					
+					</div>
+							{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+
+
+	<!-- testimonail-section -->
+	
+	<!-- end testimonail-section -->
+	
+	<!-- advertisement section -->
+
+
+	<!-- end shop banner -->
+
+	<!-- latest news -->
+	<div class="latest-news pt-150 pb-150">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">Our</span> News</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+					</div>
+				</div>
+			</div>
+
+			
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<a href="news.html" class="boxed-btn">More News</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end latest news -->
+
+{% endblock %}

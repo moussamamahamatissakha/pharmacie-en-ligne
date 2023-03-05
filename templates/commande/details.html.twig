@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block container %}
+
+	<div class="container ">
+ <div class="row product-lists ">
+				<div class="col-lg-4 col-md-4 text-center strawberry ">
+					<div class="single-product-item float-center">
+						<div class="product-image">
+							<a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+						</div>
+						<h3>id : {{commande.id}}</h3>
+						<h3>numero : {{commande.numero}}</h3>
+						<h3>zone : {{commande.zone}}</h3>
+						<h3>etat : {{commande.etat}}</h3>
+						<h3>date : {{commande.date|date('d-m-y')}}</h3>
+						<h3>client : {{commande.client.username}}</h3>
+						<p class="product-price"><span>Prix</span> {{commande.prix}} </p>
+						<a href="{{path('app_test')}}" class="cart-btn text-white">rerour</a>
+					</div>
+				</div>
+            </div>
+	</div>
+ {% endblock %}

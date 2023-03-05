@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanierController!{% endblock %}
+
+{% block body %}
+<section class="h-100 h-custom" style="background-color: #d2c9ff;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-8">
+                <div class="p-5">
+                  <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h3 class="fw-bold mb-0 text-black">Pharmacie En ligne</h3>
+                   
+                    <h6 class=""><a href="{{path('app_test')}}" class="text-body">vider le panier </a>
+                     <i class="fas fa-trash fa-lg text-danger"></i>
+                     </h6>
+                    
+                  </div>
+                  <hr class="my-4">
+                    {% for panier in dataPanier %}
+                        
+    
+
+                  <div class="row mb-4 d-flex justify-content-between align-items-center">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      
+                         <img src="{{ asset('uploads/images/' ~ panier.medicament.image) }}" 
+                        class="img-fluid rounded-3" alt="Cotton T-shirt">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <h6 class="text-muted">{{panier.medicament.prix}} fca</h6>
+                      <h6 class="text-black mb-0">{{panier.medicament.libelle}}</h6>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                         <a href="{{path('RetirePanier',{'id':panier.medicament.id})}}">
+                        <i class="fas fa-minus"></i></a>
+                      
+                      </button>
+
+                      <input id="form1" min="0" name="quantity" value="{{panier.quantite}}" type="number"
+                        class="form-control form-control-sm" />
+
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <a href="{{path('versLePanier',{'id':panier.medicament.id})}}"><i class="fas fa-plus"></i></a>
+                        
+                      </button>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                      <h6 class="mb-0">{{ panier.medicament.prix * panier.quantite}} fca</h6>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                      <a href="{{path('RetirePanier',{'id':panier.medicament.id})}}" class="text-danger"><i class="fas fa-times"></i></a>
+                    </div>
+                  </div>
+                  
+                  <hr class="my-4">
+                  {% else %} 
+                        <div class="">
+                    <h4 >Le panier est vide  </h4>
+                    </div>
+                   {% endfor %}
+
+                  
+                   <div class="pt-5">
+                    <h6 class="mb-0"><a href="{{path('app_test')}}" class="text-body"><i
+                          class="fas fa-long-arrow-alt-left me-2"></i>vers catalogue</a></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 bg-grey">
+                <div class="p-5">
+                  <h3 class="fw-bold mb-5 mt-2 pt-1">Livraison</h3>
+                  <hr class="my-4">
+
+
+
+                  <div class="d-flex justify-content-between mb-4">
+                    <h5 class="text-uppercase">prix</h5>
+                    <h5>1000 fca</h5>
+                  </div>
+
+               
+                <form method="post" action="{{path('make_command')}}">
+                
+                  <h5 class="text-uppercase mb-3">Zone</h5>
+                  <div class="mb-4 pb-2">
+                    <select class="select" name="zone">
+                      <option value="medina">Medina</option>
+                      <option value="fass">Fass</option>
+                      <option value="point e">Point E</option>
+                      <option value="pas doigt">Patte d'oie</option>
+                       <option value="pas doigt">Ouakam</option>
+                    </select>
+                  </div>                  
+
+                  <hr class="my-4">
+
+                  <div class="d-flex justify-content-between mb-5">
+                    <h5 class="text-uppercase">Total price</h5>
+                    <h5>{{totalPanier}}</h5>
+                  </div>
+                  <input id="total" name="total" type="hidden" value="{{totalPanier}}">
+
+             
+                  <button type="submit" class="btn btn-dark btn-block btn-lg"
+                    data-mdb-ripple-color="dark">Register</button>
+                </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block container %}
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Numero</th>
+      <th scope="col">Date</th>
+      <th scope="col">Prix</th>
+      <th scope="col">Client</th>
+      <th scope="col">Etat</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for commande in commandes %}
+    
+ 
+    <tr>
+      <td>{{commande.numero}}</td>
+    <td>{{commande.date|date("m/d/Y")}}</td>
+      <td>{{commande.prix}}</td>
+      <td>{{commande.client.username}}</td>
+       <td>{{commande.etat}}</td>
+        <td>
+        
+            <a href="{{path('detailsCommande',{'id':commande.id})}}" class="text-white bg-primary">Details</a>
+          
+            	{% if is_granted('ROLE_ADMIN') %}
+             <a href="{{path('changerEtatCommande',{'id':commande.id})}}" class="text-white bg-success">Valider</a>
+               {% endif %}
+        </td>
+    </tr>
+     {% endfor %}
+  
+  </tbody>
+</table>
+{% endblock %}
