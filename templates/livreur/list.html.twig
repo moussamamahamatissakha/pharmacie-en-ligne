@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block container %}
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Tel</th>
+      <th scope="col">Matricule</th>
+      <th scope="col">Etat</th>
+        <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for livreur in livreurs %}
+    
+    
+ 
+
+    <tr>
+      
+          <td>  <img src="{{ asset('uploads/images/' ~ livreur.image) }}"  
+                    alt="" style="width: 150px; height: 100%;"></td>
+          <td>{{livreur.nom}}</td>
+          <td>{{livreur.tel}}</td>
+          <td>{{livreur.matricule}}</td>
+          <td>{{livreur.etat}}</td>
+        
+            <form action="{{path('livrerCommande',{'id':livreur.id})}}" method="post">
+          <td>
+            <input type="hidden" name="idCommande" value="{{idCommande}}">
+             {% if livreur.etat == 'disponible' %}
+              <button class="text-white bg-primary" type="submit">Click</button>
+             {% endif %}
+          </td>
+          </form>
+            
+         
+          
+      
+    </tr>
+     
+     {% endfor %}
+  
+  </tbody>
+</table>
+{% endblock %}

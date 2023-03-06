@@ -6,6 +6,7 @@ use App\Entity\Client;
 use App\Entity\Commande;
 use App\Entity\Medicament;
 use App\Repository\CommandeRepository;
+use App\Repository\LivreurRepository;
 use App\Repository\MedicamentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,15 +54,47 @@ class CommandeController extends AbstractController
     }
     //changer etat d'un commande en valide
     #[Route('/changerEtatCommande/{id}', name: 'changerEtatCommande')]
-    public function changerEtatCommande(int $id,CommandeRepository $commandeRepo, EntityManagerInterface $em): Response
+    public function changerEtatCommande(int $id,CommandeRepository $commandeRepo, LivreurRepository $livreurRepository,EntityManagerInterface $em): Response
     {
         $commande=$commandeRepo->find($id);
         $commande->setEtat("valide");
         $em->persist($commande);
         $em->flush();
 
+        $livreurs=$livreurRepository->findAll();
+        return $this->render('livreur/list.html.twig', [
+            'livreurs' => $livreurs,
+            'idCommande' => $id
+        ]);
+    }
+    //changerEtatCommandePayer
+    #[Route('/changerEtatCommandePayer/{id}', name: 'changerEtatCommandePayer')]
+    public function changerEtatCommandePayer(int $id,CommandeRepository $commandeRepo, EntityManagerInterface $em): Response
+    {
+        $commande=$commandeRepo->find($id);
+        $commande->setEtat("payée");
+        $livreur= $commande->getLivreur();
+        $livreur->setEtat("disponible");
+        $em->persist($livreur);
+        $em->flush();
+        $em->persist($commande);
+        $em->flush();
+
         return $this->redirectToRoute('all_commande');
     }
+    //changerEtatCommandeAnnuler
+    #[Route('/changerEtatCommandeAnnuler/{id}', name: 'changerEtatCommandeAnnuler')]
+    public function changerEtatCommandeAnnuler(int $id,CommandeRepository $commandeRepo, EntityManagerInterface $em): Response
+    {
+        $commande=$commandeRepo->find($id);
+        $commande->setEtat("annulée");
+        $em->persist($commande);
+        $em->flush();
+
+        return $this->redirectToRoute('all_commande');
+    }
+
+
     //ajout une commande
     #[Route('/add-command', name: 'make_command')]
     public function makeCommand(CommandeRepository $commandeRepo, MedicamentRepository $medicamentRepository, 
@@ -82,7 +115,7 @@ class CommandeController extends AbstractController
         $medicaments = $session->get('panier', []);
         if($medicaments!=null){
             $commande = new Commande();
-            $commande->setEtat("En cours")
+            $commande->setEtat("encours")
                     ->setClient($this->getUser())
                     ->setDate(new \DateTimeImmutable())
                     ->setPrix($ttoall)
