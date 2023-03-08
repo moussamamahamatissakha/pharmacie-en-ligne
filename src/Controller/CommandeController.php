@@ -140,7 +140,7 @@ class CommandeController extends AbstractController
         $session->set('panier', []);
         return $this->redirectToRoute('app_test');
     }
-    ////
+    
     
     ////
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ComprimeRepository;
+use App\Repository\LivreurRepository;
 use App\Repository\MedicamentRepository;
 use App\Repository\PoudreRepository;
 use App\Repository\SiropRepository;
@@ -21,9 +22,9 @@ class TestController extends AbstractController
     SiropRepository $siropRepository,
     PoudreRepository $poudreRepository,
 
-    PaginatorInterface $paginator,UserRepository $userRepository): Response
+    PaginatorInterface $paginator,UserRepository $userRepository,LivreurRepository $livreurRepository): Response
     {
-        $users=$userRepository->findAll();
+        $users=$livreurRepository->findAll();
         $medicamentsAll=$medicamentRepository->findAll();
         $medicaments = $paginator->paginate(
             $medicamentsAll, 
@@ -44,9 +45,10 @@ class TestController extends AbstractController
     SiropRepository $siropRepository,
     PoudreRepository $poudreRepository,
 
-    PaginatorInterface $paginator,UserRepository $userRepository): Response
+    PaginatorInterface $paginator,UserRepository $userRepository,LivreurRepository $livreurRepository): Response
     {
-        $users=$userRepository->findAll();
+        //$users=$userRepository->findAll();
+        $users=$livreurRepository->findAll();
         $comprimeAll=$comprimeRepository->findAll();
         $medicaments = $paginator->paginate(
             $comprimeAll, 
@@ -68,10 +70,10 @@ class TestController extends AbstractController
     SiropRepository $siropRepository,
     PoudreRepository $poudreRepository,
 
-    PaginatorInterface $paginator,UserRepository $userRepository): Response
+    PaginatorInterface $paginator,UserRepository $userRepository,LivreurRepository $livreurRepository): Response
     {
         //poudre
-        $users=$userRepository->findAll();
+        $users=$livreurRepository->findAll();
         $poudreAll=$poudreRepository->findAll();
         $medicaments = $paginator->paginate(
             $poudreAll, 
@@ -93,9 +95,10 @@ class TestController extends AbstractController
     SiropRepository $siropRepository,
     PoudreRepository $poudreRepository,
 
-    PaginatorInterface $paginator,UserRepository $userRepository): Response
+    PaginatorInterface $paginator,UserRepository $userRepository,LivreurRepository $livreurRepository): Response
     {
-        $users=$userRepository->findAll();
+        //$users=$userRepository->findAll();
+        $users=$livreurRepository->findAll();
        
         //sirop
         $siropAll=$siropRepository->findAll();

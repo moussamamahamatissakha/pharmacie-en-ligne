@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Sirop;
+use App\Entity\Poudre;
 use App\Entity\Comprime;
 use App\Entity\Medicament;
-use App\Entity\Poudre;
-use App\Entity\Sirop;
 use App\Form\MedicamentType;
+use App\Repository\UserRepository;
+use App\Repository\LivreurRepository;
 use App\Repository\MedicamentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -240,6 +243,35 @@ class MedicamentController extends AbstractController
             'form' => $form->createView()
         ]);
 
+    }
+    ////searchMedicament
+    #[Route('/searchMedicament', name: 'search_Medicament')]
+    public function search_Medicament(MedicamentRepository $medicamentRepository,Request $request
+    ,PaginatorInterface $paginator,LivreurRepository $livreurRepository
+    
+    
+    ): Response
+    {
+
+        $libelle = $request->request->get("libelle");
+        $medicamentsAll=$medicamentRepository->findby(['libelle'=>$libelle]);
+
+          //poudre
+          $users=$livreurRepository->findAll();
+          //$poudreAll=$poudreRepository->findAll();
+          $medicaments = $paginator->paginate(
+              $medicamentsAll, 
+              $request->query->getInt('page', 1),3
+          );
+  
+          return $this->render('test/index.html.twig', [
+              'controller_name' => 'TestController',
+              'medicaments'=> $medicaments,
+              'users'=> $users,
+             
+          ]);
+        
+        
     }
 }
 /* 

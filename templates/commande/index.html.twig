@@ -26,15 +26,15 @@
        <td>{{commande.etat}}</td>
         <td>
         
-            <a href="{{path('detailsCommande',{'id':commande.id})}}" class="text-white bg-primary">Details</a>
+            <a href="{{path('detailsCommande',{'id':commande.id})}}" class="btn text-white bg-primary">Details</a>
           
           	{% if is_granted('ROLE_ADMIN') %}
               {% if commande.etat == 'encours' %}
-                 <a href="{{path('changerEtatCommandeAnnuler',{'id':commande.id})}}" class="text-white bg-success">Annuler</a>
-                 <a href="{{path('changerEtatCommande',{'id':commande.id})}}" class="text-white bg-success">Valider</a>
+                 <a href="{{path('changerEtatCommandeAnnuler',{'id':commande.id})}}" class="btn text-white bg-success">Annuler</a>
+                 <a href="{{path('changerEtatCommande',{'id':commande.id})}}" class="btn text-white btn-success">Valider</a>
               {% endif %}
                {% if commande.etat == 'valide' %}
-                 <a href="{{path('changerEtatCommandePayer',{'id':commande.id})}}" class="text-white bg-success">Payer</a>
+                 <a href="{{path('changerEtatCommandePayer',{'id':commande.id})}}" class="btn text-white bg-success">Payer</a>
               {% endif %}
           
             
